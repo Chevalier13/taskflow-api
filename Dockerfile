@@ -1,21 +1,19 @@
-FROM node:20-alpine
+FROM python:3.11-slim
+
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-
-FROM node:20-alpine
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-
-RUN npm install --omit=dev
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 8000
 
-CMD ["node", "src/app.js"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
