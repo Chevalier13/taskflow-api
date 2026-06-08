@@ -1,0 +1,21 @@
+{
+    "name": "taskflow-api",
+    "version": "1.0.0",
+    "description": "API de Gerenciamento de Tarefas para a P2",
+    "main": "src/app.js",
+    "scripts": {
+      "start": "node src/app.js",
+      "test": "jest"
+    },
+    "dependencies": {
+      "express": "^4.19.2",
+      "pg": "^8.11.5"
+    },
+    "devDependencies": {
+      "jest": "^29.7.0",
+      "supertest": "^7.0.0"
+    },
+    "engines": {
+      "node": ">=20.0.0"
+    }
+  }
