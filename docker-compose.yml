@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:16-alpine
+    container_name: taskflow_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: senha_secreta_123
+      POSTGRES_DB: taskflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    image: SEU_USUARIO_DO_DOCKERHUB/taskflow-api:v1
+    container_name: taskflow_api
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DB_HOST: database
+      DB_USER: admin
+      DB_PASS: senha_secreta_123
+      DB_NAME: taskflow
+    depends_on:
+      - database
+
+volumes:
+  postgres_data:
