@@ -1,17 +1,19 @@
 FROM python:3.11-slim
 
-ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+# Evita que o Python escreva arquivos .pyc e bufeie os logs
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /usr/src/app
 
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
+# Copia e instala os requerimentos padrão
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
+# Instala a versão pré-compilada do driver do Postgres (não precisa de gcc/libpq-dev)
+RUN pip install --no-cache-dir psycopg2-binary
+
+# Copia o restante do código do projeto
 COPY . .
 
 EXPOSE 8000

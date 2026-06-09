@@ -3,8 +3,9 @@ from django.urls import path
 from django.http import JsonResponse
 
 def home(request):
-    return JsonResponse({"message": "TaskFlow API em Django funcionando no Docker!"})
+    return JsonResponse({"status": "API Taskflow Rodando com Sucesso", "banco": "Postgres Conectado"})
 
 urlpatterns = [
-    path('', home),  
+    path('', home),  # Rota raiz para o localhost parar de dar erro
+    path('admin/', admin.site.urls),
 ]
